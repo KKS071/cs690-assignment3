@@ -178,3 +178,32 @@ The implementation agent must not answer any of these by guessing, by picking a 
 
 ---
 
+## Part 5. Tests
+
+All three tests are in `tests/test_student_acceptance.py`. They call only `reservation_disposition` and `can_offer_to_waitlist` with named arguments. The grace period is in the named constant `CONFIGURED_GRACE_MINUTES = 12`, marked in the file as a configured value for the tests and not the lab's policy (see Q-1). Expected values come from the criteria above, not from the reference code. `reference/` and `tests/test_reference_smoke.py` were not edited.
+
+| Test name | AC ID | Requirement ID | Evidence ID |
+| --- | --- | --- | --- |
+| test_ac1_unchecked_reservation_without_hold_is_releasable_after_configured_grace | AC-1 | R-1 | E-3; E-2 |
+| test_ac2_checked_in_reservation_stays_active_after_configured_grace | AC-2 | R-2 | E-4 |
+| test_ac3_releasable_kit_not_offered_to_waitlist_before_preparation_complete | AC-3 | R-3 | E-6; E-2 |
+
+How each test maps to its criterion:
+
+- AC-1: Given G = `CONFIGURED_GRACE_MINUTES`, `checked_in=False`, `staff_hold_until=None`; When `minutes_after_start = G + 5`; Then asserts the result is `"releasable"`.
+- AC-2: Given G = `CONFIGURED_GRACE_MINUTES`, `checked_in=True`, `staff_hold_until=None`; When `minutes_after_start = G + 10`; Then asserts the result is `"active"`.
+- AC-3: Given `disposition="releasable"`, `preparation_complete=False`; When `can_offer_to_waitlist` is called; Then asserts the result `is False`.
+
+All three tests passed on the first run, so no criterion or expected value was changed.
+
+Final `python -m pytest -q` output:
+
+```text
+....                                                                     [100%]
+4 passed in 0.02s
+```
+
+(Four tests: the provided smoke test plus my three acceptance tests.)
+
+---
+

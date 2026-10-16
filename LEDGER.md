@@ -50,3 +50,12 @@ checks:    read the spec against RUBRIC.md Part 4 items one by one
 evidence:  R-3; E-2, E-4, E-5, E-6; Q-1, Q-2, Q-3
 risk:      what "preparation complete" means in practice depends on technicians who were never interviewed (Q-2)
 
+## Entry 4
+artifact:  tests/test_student_acceptance.py, three acceptance tests for AC-1, AC-2, AC-3
+tool:      Claude (claude.ai), Claude Opus 5.5, 2026-10-15
+prompts:   asked the assistant to turn AC-1 to AC-3 into exactly three pytest tests; prompts/drafting_assist_prompt.txt
+review:    checked that each test's inputs match its criterion's Given and When and that each asserts the Then; took expected values from the criteria, not from reference/reservation.py; put the grace value in CONFIGURED_GRACE_MINUTES = 12 with a comment that it is a configured test value and not lab policy (Q-1); confirmed only reservation_disposition and can_offer_to_waitlist are called, with named arguments
+checks:    python -m pytest -q -> 4 passed (1 smoke + 3 student tests); git diff on reference/ and tests/test_reference_smoke.py -> no changes
+evidence:  AC-1/R-1/E-3;E-2, AC-2/R-2/E-4, AC-3/R-3/E-6;E-2
+risk:      the tests do not cover the exact grace boundary or the end of a staff hold, because those behaviors are not settled by the interview
+
