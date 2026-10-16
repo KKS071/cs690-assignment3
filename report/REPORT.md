@@ -39,3 +39,63 @@ The conflicting grace value is logged only as Q-1. Neither 15 nor 20 appears as 
 
 ---
 
+## Part 3. Requirements, INVEST, and acceptance criteria
+
+### Four requirement slices
+
+**R-1. Release only after the configured grace period**
+
+- User story: As a checkout coordinator, I want a reservation with no check-in and no staff hold to become releasable only once the lab's configured grace period has passed, so that late students keep their kit during the grace period and the manager can change the policy without a code change.
+- Structured requirement: When a reservation is not checked in and has no staff hold in effect, the system shall show its status as "held" while the minutes after the reservation start are less than the configured grace period G, and as "releasable" once the minutes after the start reach G. G is read from the lab's configuration; the system shall not contain a built-in grace value.
+- Trace: E-3, E-2. The value of G is not settled (Q-1).
+
+**R-2. Check-in and staff holds protect the reservation**
+
+- User story: As a student borrower, I want my reservation to stay mine once I have checked in at the desk or staff have recorded a hold for me, so that it does not disappear just because the clock passed the grace window.
+- Structured requirement: The system shall show a checked-in reservation as "active" at any time after its start, regardless of the grace period. For a reservation that is not checked in but has a recorded staff hold, the system shall show it as "held" while the current time is before the hold's recorded end time.
+- Trace: E-4, E-5, E-1.
+
+**R-3. Offer to the waitlist only when the kit is ready**
+
+- User story: As a waitlisted student, I want to be offered a kit only when it is actually ready to hand out, so that I am not sent to the desk while the technicians are still checking or repacking it.
+- Structured requirement: The system shall offer a kit to the waitlist only when its reservation status is "releasable" and the equipment technicians have recorded that its preparation is complete. A releasable kit without recorded preparation shall not be shown to the waitlist.
+- Trace: E-6, E-2. How preparation is recorded is not settled (Q-2).
+
+**R-4. Message before a kit goes to the waitlist**
+
+- User story: As a student borrower who is running late, I want to receive a message before my kit is offered to the waitlist, so that I know whether I still have the reservation before I cross campus.
+- Structured requirement: Before a kit is offered to the waitlist, the system shall send a message about the pending release to the configured recipient or recipients through the configured channel.
+- Trace: **Assumption.** P10 says "they should get a message" but does not say who. Clarifying question (Q-3): In P10, who are "they" (the late borrower, the waitlisted student, or both), through which channel should the message go, and how long before the waitlist offer?
+
+No requirement hard-codes 15 or 20 minutes; R-1 uses the configured value G.
+
+### INVEST check
+
+| Requirement | I | N | V | E | S | T | Named problem for any fail |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R-1 | Pass | Pass | Pass | Pass | Pass | Pass | None |
+| R-2 | Pass | Pass | Pass | Pass | Pass | Pass | None |
+| R-3 | Fail | Pass | Pass | Pass | Pass | Pass | I: couples the waitlist offer to a technician preparation-marking workflow that has not been designed or discussed with the technicians (Q-2). |
+| R-4 | Fail | Pass | Pass | Fail | Pass | Fail | I: couples the message to R-3's waitlist-offer event, so it cannot ship before R-3. E: recipient, channel and lead time are unknown (Q-3), so the work cannot be sized. T: with no recipient or lead time defined, there is no pass/fail threshold to test against. |
+
+### Three acceptance criteria
+
+**AC-1 (R-1)**
+- Given the lab's configured grace period is G minutes, the borrower has not checked in, and no staff hold is recorded,
+- When the desk checks the reservation's status at G + 5 minutes after the reservation start,
+- Then the status is "releasable".
+
+**AC-2 (R-2)**
+- Given the lab's configured grace period is G minutes, the borrower has checked in at the desk, and no staff hold is recorded,
+- When the desk checks the reservation's status at G + 10 minutes after the reservation start,
+- Then the status is "active".
+
+**AC-3 (R-3)**
+- Given a reservation whose status is "releasable" and the equipment technicians have not recorded that the kit's preparation is complete,
+- When the desk checks whether the kit can be offered to the waitlist,
+- Then the kit is not offered to the waitlist (the check returns false).
+
+None of the criteria picks a grace value, decides exactly when a staff hold ends, or decides how technicians mark preparation. AC-1 and AC-2 use the configured value G, and both check times stay away from the exact grace boundary.
+
+---
+
