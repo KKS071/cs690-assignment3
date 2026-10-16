@@ -244,3 +244,26 @@ Not listed: SYN-01's last paragraph (late arrival, staff-recorded holds, checked
 
 ---
 
+## Part 7. Traceability and ledger
+
+Completed `traceability/template.csv`:
+
+```csv
+evidence_id,requirement_id,acceptance_criterion_id,test_name
+E-3;E-2,R-1,AC-1,test_ac1_unchecked_reservation_without_hold_is_releasable_after_configured_grace
+E-4,R-2,AC-2,test_ac2_checked_in_reservation_stays_active_after_configured_grace
+E-6;E-2,R-3,AC-3,test_ac3_releasable_kit_not_offered_to_waitlist_before_preparation_complete
+```
+
+The provenance ledger is `LEDGER.md` at the repository root. It has one entry per reviewable change, including Entry 5 for the Part 6 AI audit. The prompts it references are `prompts/ambiguity_audit_prompt.txt` and `prompts/drafting_assist_prompt.txt`.
+
+---
+
+## Verification
+
+Command: `python -m pytest -q`
+
+```text
+....                                                                     [100%]
+4 passed in 0.02s
+```

@@ -1,1 +1,4 @@
 evidence_id,requirement_id,acceptance_criterion_id,test_name
+E-3;E-2,R-1,AC-1,test_ac1_unchecked_reservation_without_hold_is_releasable_after_configured_grace
+E-4,R-2,AC-2,test_ac2_checked_in_reservation_stays_active_after_configured_grace
+E-6;E-2,R-3,AC-3,test_ac3_releasable_kit_not_offered_to_waitlist_before_preparation_complete

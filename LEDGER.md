@@ -77,3 +77,11 @@ checks:    grep -ci on transcripts/interview.txt for "text", "QR", "brand", "bat
 evidence:  Part 6 synthetic critique; A-1
 risk:      none of SYN-01's hypotheses has been tested with real users or technicians
 
+## Entry 7
+artifact:  traceability/template.csv
+tool:      Claude (claude.ai), Claude Opus 5.5, 2026-10-15
+prompts:   asked the assistant to fill the traceability matrix from the tests; prompts/drafting_assist_prompt.txt
+review:    checked that each row's IDs match the Part 5 chain table and that every ID appears in the report; used semicolons for multiple evidence IDs as the handout specifies
+checks:    python -m pytest -q -> 4 passed; test names in the CSV copied from the test file
+evidence:  AC-1, AC-2, AC-3; R-1, R-2, R-3; E-2, E-3, E-4, E-6
+risk:      the matrix traces only to tested requirements; R-4 has no test because notifications cannot be checked with the reference module
