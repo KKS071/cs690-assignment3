@@ -207,3 +207,40 @@ Final `python -m pytest -q` output:
 
 ---
 
+## Part 6. AI audit and synthetic-user critique
+
+The audit was run once with the exact text of `prompts/ambiguity_audit_prompt.txt` and the transcript attached. The complete, unedited response is in `results/ambiguity_audit.md`. It returned 8 findings.
+
+### Audit adjudication
+
+| # | Finding | Paragraphs | Classification | Reason |
+| --- | --- | --- | --- | --- |
+| 1 | Conflicting grace period value | INT-01:P06, INT-01:P12 | True positive | Jordan states 15 minutes and Priya states 20 minutes for the same rule, which is a real direct contradiction. |
+| 2 | "Only a little late" | INT-01:P07 | True positive | "A little late" gives no amount of time and may imply tolerance beyond the grace period, so it is a real vague-time ambiguity. |
+| 3 | Unclear recipient of the pre-waitlist message | INT-01:P10 | True positive | "They" has no clear referent and neither timing nor channel is stated, so who is notified and when is truly unresolved. |
+| 4 | Technician readiness signal undefined | INT-01:P09, INT-01:P19, INT-01:P21 | True positive | Jordan says the technicians need a way to mark preparation but "We have not asked them yet," so the readiness mechanism is genuinely missing. |
+| 5 | Staff hold rules incomplete | INT-01:P04, INT-01:P19, INT-01:P21 | True positive | The transcript shows a hold with an end time and says staff "sometimes extend" reservations but never says who may grant one, how long it may last, or what happens when it ends. |
+| 6 | "Release" as automatic event or staff action | INT-01:P06, INT-01:P09 | False positive | Both excerpts name the same actor, "we" (the desk staff), so the transcript is clear that staff release reservations today; whether to automate that is a new design choice, not an ambiguity in what was said. |
+| 7 | Original borrower arriving after release but before handoff | INT-01:P13, INT-01:P17 | True positive | P13 describes exactly this situation and nobody states who has priority, so the rule is genuinely missing. |
+| 8 | "Checked in" versus "picked up" | INT-01:P02, INT-01:P17, INT-01:P19, INT-01:P21 | True positive | P02 describes the desk marking a reservation "picked up," while P17 and P21 rely on a separate "checked in" state that is never defined, so when the check-in protection starts is unclear. |
+
+Result: 7 true positives, 1 false positive.
+
+### Synthetic-user critique (SYN-01)
+
+SYN-01 is a hypothesis source only. Every claim below is one that INT-01 does not establish.
+
+| # | Synthetic claim (quoted) | Why INT-01 does not establish it |
+| --- | --- | --- |
+| 1 | "wants the media lab reservation process to require as little staff contact as possible" | Priya called the desk, showed her confirmation email to a desk worker, and accepted a desk-managed paper list (P13); no one says they want less staff contact. |
+| 2 | "Students probably prefer text-message alerts over email" | Text messages are never mentioned; the only channels named are phone, email, and in person (P10, P13), and no student states a channel preference. |
+| 3 | "A 10-minute grace period would likely feel fair" | The only values in the interview are 15 minutes (P06) and 20 minutes (P12), and nobody discusses what would feel fair. |
+| 4 | "The strongest feature would be a QR-code self-check-in" | QR codes and self-check-in never appear, and no speaker ranks features; Dana says she is not looking for feature ideas (P01). |
+| 5 | "a borrower can preserve a reservation without waiting for a desk worker" | Check-in today happens at the desk with a university ID check (P02), and the only ways a late reservation was preserved were a staff-written hold (P04) or checking in at the desk (P17). |
+| 6 | "Students who lose a reservation are likely willing to accept a different brand of camera or light automatically, as long as the general equipment category is the same" | Priya took another kit after waiting (P13), but nothing says it was a different brand or that she would accept a substitution automatically. |
+| 7 | "Equipment technicians would probably prefer to receive one batch of released-reservation updates every 30 minutes instead of individual updates" | The technicians were never interviewed (P19, P21), so their preferences are unknown, and no update interval is mentioned. |
+
+Not listed: SYN-01's last paragraph (late arrival, staff-recorded holds, checked-in reservations, equipment preparation, and waitlist handoff matter) is supported by INT-01 (P04, P09, P17, P19, P21). It is still not used as evidence; the E entries cite the transcript directly.
+
+---
+

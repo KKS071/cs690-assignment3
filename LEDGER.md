@@ -68,3 +68,12 @@ checks:    re-read every cited paragraph for each finding; confirmed the saved f
 evidence:  Part 6 audit adjudication; findings map to Q-1 (finding 1), Q-3 (finding 3), Q-2 (finding 4)
 risk:      the audit was run by the same model family used to draft the other parts, so its findings may overlap my own analysis rather than catch issues I missed; only one run was made, as the handout requires
 
+## Entry 6
+artifact:  report/REPORT.md, Part 6 synthetic-user critique of SYN-01
+tool:      Claude (claude.ai), Claude Opus 5.5, 2026-10-15
+prompts:   asked the assistant to list every SYN-01 claim INT-01 does not establish; prompts/drafting_assist_prompt.txt
+review:    split SYN-01 into its distinct claims and checked each against the transcript; listed 7 unsupported claims; did not list the final paragraph (holds, check-in, preparation, waitlist) because P04, P09, P17, P19 and P21 support it; noted that Priya did take another kit (P13) but that this does not show brand indifference or automatic substitution
+checks:    grep -ci on transcripts/interview.txt for "text", "QR", "brand", "batch", " 10 ", " 30 " -> 0 matches each
+evidence:  Part 6 synthetic critique; A-1
+risk:      none of SYN-01's hypotheses has been tested with real users or technicians
+
