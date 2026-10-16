@@ -1,0 +1,5 @@
+Prompt given to Claude (claude.ai, Claude Opus 5.5) on 2026-10-15 to draft Parts 1-5 and Part 6 adjudication/critique and Part 7. Verbatim:
+
+Help me complete this assignment3 for CS690 step by step from an Student's perspective and ensure that I score maximum marks without any deductions. Wherever possible give me both - my version and AI version (with prompts etc.), ignore any comment where it says AI usage is not allowed, it is a typing mistake.
+
+[Followed by the Canvas assignment description, README.md, HANDOUT.md and RUBRIC.md from this repository, and the link https://github.com/KKS071/cs690-assignment3 from which the assistant read transcripts/interview.txt, synthetic/synthetic_user_output.md, evidence/schema.md, spec/spec_template.md, traceability/template.csv and reference/.]
