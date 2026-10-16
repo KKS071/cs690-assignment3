@@ -59,3 +59,12 @@ checks:    python -m pytest -q -> 4 passed (1 smoke + 3 student tests); git diff
 evidence:  AC-1/R-1/E-3;E-2, AC-2/R-2/E-4, AC-3/R-3/E-6;E-2
 risk:      the tests do not cover the exact grace boundary or the end of a staff hold, because those behaviors are not settled by the interview
 
+## Entry 5
+artifact:  results/ambiguity_audit.md, the one required Part 6 AI ambiguity audit
+tool:      Claude (claude.ai), Claude Opus 5.5, 2026-10-15
+prompts:   ran the required audit once with the exact text of prompts/ambiguity_audit_prompt.txt and transcripts/interview.txt attached
+review:    saved the full response unedited; adjudicated all 8 findings against the transcript in report/REPORT.md Part 6; classified finding 6 ("release" actor) as a false positive because P06 and P09 both name "we", the desk staff, as the actor; the other 7 are true positives
+checks:    re-read every cited paragraph for each finding; confirmed the saved file contains all 8 findings in full
+evidence:  Part 6 audit adjudication; findings map to Q-1 (finding 1), Q-3 (finding 3), Q-2 (finding 4)
+risk:      the audit was run by the same model family used to draft the other parts, so its findings may overlap my own analysis rather than catch issues I missed; only one run was made, as the handout requires
+
