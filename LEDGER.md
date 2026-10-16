@@ -41,3 +41,12 @@ checks:    confirmed AC-1, AC-2, AC-3 attach to three different requirements (R-
 evidence:  R-1, R-2, R-3, R-4, AC-1, AC-2, AC-3; traces E-1 to E-6, Q-1 to Q-3
 risk:      the R-2 behavior at the exact moment a staff hold ends is not settled by the interview and is left as an open question; the INVEST judgments are mine and were not reviewed by a stakeholder
 
+## Entry 3
+artifact:  spec/spec_template.md (copied into report/REPORT.md Part 4), specification for R-3
+tool:      Claude (claude.ai), Claude Opus 5.5, 2026-10-15
+prompts:   asked the assistant to complete the spec template for one settled requirement; prompts/drafting_assist_prompt.txt
+review:    chose R-3 because its core rule (releasable and preparation complete) is stated in P09 and P21; checked that every settled decision cites an E entry; added the "released" string edge case from P09 and the late-borrower edge case from P13; listed Q-1, Q-2, Q-3, borrower priority and hold-end behavior as open questions the agent may not guess; kept exactly one non-goal (waitlist ordering); kept the signature body as "..." so there is no implementation code
+checks:    read the spec against RUBRIC.md Part 4 items one by one
+evidence:  R-3; E-2, E-4, E-5, E-6; Q-1, Q-2, Q-3
+risk:      what "preparation complete" means in practice depends on technicians who were never interviewed (Q-2)
+
